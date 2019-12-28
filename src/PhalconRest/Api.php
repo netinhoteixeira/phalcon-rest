@@ -52,7 +52,7 @@ class Api extends \PhalconApi\Api
         return $this;
     }
 
-    public function mount(CollectionInterface $collection)
+    public function mount(CollectionInterface $collection): \Phalcon\Mvc\Micro
     {
         if ($collection instanceof ApiCollection) {
 

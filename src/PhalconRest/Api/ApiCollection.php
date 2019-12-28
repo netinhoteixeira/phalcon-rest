@@ -90,7 +90,7 @@ class ApiCollection extends \Phalcon\Mvc\Micro\Collection implements MountableIn
         return $this->description;
     }
 
-    public function setPrefix($prefix)
+    public function setPrefix($prefix): \Phalcon\Mvc\Micro\CollectionInterface
     {
         throw new Exception(ErrorCodes::GENERAL_SYSTEM, null, 'Setting prefix after initialization is prohibited.');
     }
