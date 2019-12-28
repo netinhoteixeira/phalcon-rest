@@ -2,16 +2,9 @@
     "name": "redound/phalcon-rest",
     "description": "Phalcon REST Library",
     "version": "2.0.1",
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/netinhoteixeira/phalcon-api"
-        }
-    ],
     "require": {
         "php": ">=7.4",
         "ext-phalcon": ">=4.0.0",
-        "redound/phalcon-api": "dev-php-74-support as 2.1.4"
     },
     "suggest": {
         "league/fractal": "^0.18.0",
