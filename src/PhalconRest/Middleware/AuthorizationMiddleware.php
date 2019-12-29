@@ -10,9 +10,11 @@ use PhalconRest\Mvc\Plugin;
 use PhalconRest\Api;
 use PhalconApi\Constants\ErrorCodes;
 use PhalconApi\Exception;
+use PhalconRest\Di\FactoryDefault;
 
 class AuthorizationMiddleware extends Plugin implements MiddlewareInterface
 {
+
     public function beforeExecuteRoute(Event $event, Api $api)
     {
         $collection = $api->getMatchedCollection();
@@ -62,4 +64,14 @@ class AuthorizationMiddleware extends Plugin implements MiddlewareInterface
     {
         return true;
     }
+
+    protected function parseBearerValue($string)
+    {
+        if (strpos(trim($string), 'Bearer') !== 0) {
+            return null;
+        }
+
+        return preg_replace('/.*\s/', '', $string);
+    }
+
 }
