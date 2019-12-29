@@ -21,6 +21,13 @@ class AuthorizationMiddleware extends Plugin implements MiddlewareInterface
             return;
         }
 
+        // DONE: 2019-12-29 02:41 Francisco - This kind of middleware is not called twice anymore,
+        // so AuthenticationMiddleware does not working
+        $token = $this->request->getToken();
+        if ($token) {
+            $this->authManager->authenticateToken($token);
+        }
+
         $allowed = $this->acl->isAllowed($this->userService->getRole(), $collection->getIdentifier(),
             $endpoint->getIdentifier());
 
