@@ -10,7 +10,6 @@ use PhalconRest\Mvc\Plugin;
 use PhalconRest\Api;
 use PhalconApi\Constants\ErrorCodes;
 use PhalconApi\Exception;
-use PhalconRest\Di\FactoryDefault;
 
 class AuthorizationMiddleware extends Plugin implements MiddlewareInterface
 {
@@ -29,27 +28,6 @@ class AuthorizationMiddleware extends Plugin implements MiddlewareInterface
         $token = $this->request->getToken();
         if ($token) {
             $this->authManager->authenticateToken($token);
-        } else {
-            // DONE: 2019-12-29 04:51 Francisco - Sometimes the value is not right fetched
-            $authHeader = $this->request->getHeader('AUTHORIZATION');
-            $authQuery = $this->request->getQuery('token');
-
-            if ((is_null($authHeader)) || (empty($authHeader))) {
-                $di = FactoryDefault::getDefault();
-                $request = $di->get(Services::REQUEST);
-
-                $headers = $request->getHeaders();
-
-                if (array_key_exists('Authorization', $headers)) {
-                    $authHeader = $headers['Authorization'];
-                }
-            }
-
-            $token = $authQuery ? $authQuery : $this->parseBearerValue($authHeader);
-
-            if ($token) {
-                $this->authManager->authenticateToken($token);
-            }
         }
 
         $allowed = $this->acl->isAllowed($this->userService->getRole(), $collection->getIdentifier(),
